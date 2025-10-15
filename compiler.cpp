@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string>
+#include <cstring>
 #include <map>
 
 #include "compiler.h"
@@ -77,7 +78,7 @@ bool Compiler::compile(const std::string &fileName, std::string &error)
 
 	m_moduleInfo = "";
 
-	strupr(infoLine);
+	_strupr(infoLine);
 	if (strncmp(infoLine,"INFO:",strlen("INFO:")) == 0)
 	{
 		char *ptr = infoLine + strlen("INFO:");

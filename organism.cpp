@@ -44,6 +44,7 @@
 #include "mycon.h"
 
 #include <string>
+#include <cstring>
 #include <ctime>
 #include <cstdlib>
 #include <cstdio>
@@ -1031,32 +1032,10 @@ void Organism::singleStep(std::vector<std::string> &lines)
 		switch (toupper(result[0]))
 		{
 			case 'U':
-				{
-					std::vector<std::string> v;
-
-					if (result.length() == 1)
-					{
-						m_disasm->getDisassembly(v,m_ip, m_ip+UNASSEMBLE_LINES*INSTR_SLOTS);
-					}
-					else				
-					{
-						uint16 startIP = (uint16)atoi(result.c_str()+1);
-						m_disasm->getDisassembly(v,startIP,startIP+UNASSEMBLE_LINES*INSTR_SLOTS);
-					}
-
-					unsigned int i;
-					for (i=0;i<v.size();i++)
-					{
-						m_console->gotoXY(STATUS_X,i + START_Y);
-						m_console->printStringOverwrite(v[i]);
-					}
-					for (;i<UNASSEMBLE_LINES;i++)
-					{
-						m_console->gotoXY(STATUS_X,i + START_Y);
-						m_console->printStringOverwrite("");
-					}
-					
-				}
+				if (result.length() == 1)
+					printDisassembly(m_ip);
+				else
+					printDisassembly((uint16)atoi(result.c_str() + 1));
 				m_world->redrawAll();
 				break;
 			case 'G':
@@ -1111,8 +1090,7 @@ void Organism::editData(const std::string &data)
 {
 	unsigned int off, val;
 
-	sscanf(data.c_str()+1,"%d %d",&off,&val);
-	if (off < MAX_DNA)
+	if (sscanf(data.c_str() + 1, "%d %d", &off, &val) && off < MAX_DNA)
 		m_dna[(uint16)off] = (uint16)val;
 }
 
@@ -1120,18 +1098,33 @@ void Organism::editRegister(const std::string &data)
 {
 	unsigned int off, val;
 
-	sscanf(data.c_str()+1,"%d %d",&off,&val);
-	if (off < MAX_REGS)
+	if (sscanf(data.c_str() + 1, "%d %d", &off, &val) && off < MAX_REGS)
 		m_regs[(uint16)off] = (uint16)val;
 }
 
+void Organism::printDisassembly(uint16 start)
+{
+	std::vector<std::string> v;
+	m_disasm->getDisassembly(v, start, start + UNASSEMBLE_LINES * INSTR_SLOTS);
 
+	unsigned int i;
+	for (i = 0; i < v.size(); i++)
+	{
+		m_console->gotoXY(STATUS_X, i + START_Y);
+		m_console->printStringOverwrite(v[i]);
+	}
+	for (; i < UNASSEMBLE_LINES; i++)
+	{
+		m_console->gotoXY(STATUS_X, i + START_Y);
+		m_console->printStringOverwrite("");
+	}
+}
 
 void Organism::printData(uint16 start)
 {
 	uint16 lineNum = 0;
 
-	for (uint16 i=start;lineNum < DATA_LINES&& i < MAX_DNA;i++)
+	for (uint16 i=start; lineNum < DATA_LINES && i < MAX_DNA; i++)
 	{
 		char temp[256];
 
@@ -1139,6 +1132,10 @@ void Organism::printData(uint16 start)
 		sprintf(temp,"%04d: %5d (%04X)",i,m_dna[i],m_dna[i]);
 		m_console->printStringOverwrite(temp);
 		lineNum++;
+	}
+	for (; lineNum < DATA_LINES; lineNum++) {
+		m_console->gotoXY(STATUS_X, lineNum + START_Y);
+		m_console->printStringOverwrite("");
 	}
 }
 

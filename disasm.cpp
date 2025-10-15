@@ -40,6 +40,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <cstring>
 
 #include "compiler.h"
 #include "constants.h"

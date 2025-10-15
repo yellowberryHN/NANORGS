@@ -85,9 +85,9 @@ public:
 	{
 		return(m_organismID);
 	}
-	uint16 Organism::getX(void) { return(m_x); }
-	uint16 Organism::getY(void)	{ return(m_y); }
-	bool Organism::getOldXY(uint16 *x,uint16 *y) 
+	uint16 getX(void) { return(m_x); }
+	uint16 getY(void)	{ return(m_y); }
+	bool getOldXY(uint16 *x,uint16 *y) 
 	{ 
 		bool changed = m_x != m_oldX || m_y != m_oldY;
 
@@ -169,9 +169,6 @@ private:
 	void cksum(void);
 	bool increaseEnergy(uint16 energyAmt);
 	void debug(void);
-	
-	std::string getCurrentInstructionString(int location, bool appendValues);
-	std::string getOperandString(int instrLocation, int opNum, std::string &value);
 
 private:
 	World	*m_world;

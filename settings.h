@@ -42,6 +42,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
+#include <cstring>
 #include <cctype>
 
 #include "types.h"
@@ -58,7 +59,7 @@ public:
 		m_foodDensity = DEFAULT_FOOD_DENSITY;
 		m_singleStepID = INVALID_ID;
 		m_singleStep = false;
-		m_seed = time(NULL);
+		m_seed = (uint32)time(NULL);
 		m_quiet = false;
 	}
 	

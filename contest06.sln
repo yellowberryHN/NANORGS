@@ -1,21 +1,24 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "contest06", "contest06.vcproj", "{4C47279F-0948-4E6F-AB37-BE5C9A44B213}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "contest06", "contest06.vcxproj", "{4C47279F-0948-4E6F-AB37-BE5C9A44B213}"
 EndProject
 Global
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Debug.ActiveCfg = Debug|Win32
-		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Debug.Build.0 = Debug|Win32
-		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Release.ActiveCfg = Release|Win32
-		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Release.Build.0 = Release|Win32
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Debug|x86.ActiveCfg = Debug|Win32
+		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Debug|x86.Build.0 = Debug|Win32
+		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Release|x86.ActiveCfg = Release|Win32
+		{4C47279F-0948-4E6F-AB37-BE5C9A44B213}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+		SolutionGuid = {0B8D1B67-E351-47EC-9653-20E4A3F8406C}
 	EndGlobalSection
 EndGlobal

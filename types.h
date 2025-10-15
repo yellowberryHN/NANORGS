@@ -47,7 +47,7 @@ typedef unsigned int uint32;
 
 #ifndef WIN32
 
-inline void strupr(char *s)
+inline void _strupr(char *s)
 {
 	int i;
 	for (i=0;s[i];i++)

@@ -38,6 +38,7 @@
 #define _COMPILER_H_
 
 #include <string>
+#include <cstring>
 #include <vector>
 #include <map>
 #include <set>
@@ -91,7 +92,12 @@ private:
 class Operand
 {
 public:
-	
+	Operand() {
+		m_addrMode = 0;
+		m_reg = 0;
+		m_offset = 0;
+	}
+
 	void constructImmediate(uint16 operand)
 	{
 		m_addrMode = ADDR_MODE_IMMED;
@@ -212,13 +218,21 @@ private:
 class Instr
 {
 public:
+	Instr() {
+		m_lineNum = 0;
+		m_opcode = 0;
+		m_instrSize = INSTR_SLOTS;
+		m_maxOperands = 0;
+		m_lvalueMask = 0;
+
+		m_align = true;
+		m_relative = false;
+	}
+
 	void setOpcode(uint16 opcode, const std::string &opcodeString)
 	{
 		m_opcode = opcode;
 		m_opcodeString = opcodeString;
-		m_instrSize = INSTR_SLOTS;
-		m_align = true;
-		m_relative = false;
 		switch((OPCODE)m_opcode)
 		{
 			// 2 operand instructions whose first operand is an l-value
@@ -479,6 +493,10 @@ public:
 	Token()
 	{
 		m_tokenType = TOKEN_INVALID;
+		m_regNum = 0;
+		m_immed = 0;
+		m_opcode = OPCODE_NOP;
+		m_lineNum = 0;
 	}
 
 	bool setToken(const std::string &token,uint32 lineNum)
@@ -490,7 +508,7 @@ public:
 		m_lineNum = lineNum;
 
 		strcpy(temp,token.c_str());
-		strupr(temp);
+		_strupr(temp);
 		m_token = temp;
 		if (isalpha(m_token[0]) || m_token[0] == '_')
 		{
@@ -504,8 +522,7 @@ public:
 				{
 					// register: r##
 					unsigned int regNum;
-					sscanf(m_token.c_str()+1,"%d",&regNum);
-					if (regNum > MAX_USER_REGS)
+					if (!sscanf(m_token.c_str() + 1, "%d", &regNum) || regNum > MAX_USER_REGS)
 						return(false);
 					m_regNum = (uint16)regNum;
 					m_tokenType = TOKEN_REGISTER;
@@ -549,8 +566,7 @@ public:
 
 				unsigned int val;
 
-				sscanf(m_token.c_str()+2,"%x",&val);
-				if (val > MAX_WORD_VALUE)
+				if (!sscanf(m_token.c_str() + 2, "%x", &val) || val > MAX_WORD_VALUE)
 					return(false);
 				m_immed = (uint16) val;
 			}
@@ -565,8 +581,7 @@ public:
 
 				unsigned int val;
 
-				sscanf(m_token.c_str(),"%d",&val);
-				if (val > MAX_WORD_VALUE)
+				if (!sscanf(m_token.c_str(), "%d", &val) || val > MAX_WORD_VALUE)
 					return(false);
 
 				m_immed = (uint16)val;
@@ -880,6 +895,9 @@ public:
 	Compiler()
 	{
 		m_success = false;
+		m_curToken = 0;
+		m_lineNum = 0;
+		m_totalProgramSize = 0;
 	}
 
 	bool compile(const std::string &fileName, std::string &error);

@@ -348,7 +348,7 @@ void World::showDisplay(void)
 
 		if (m_foodCoords.size())
 		{
-			for (int i=0;i<m_foodCoords.size();i++)
+			for (size_t i=0;i<m_foodCoords.size();i++)
 			{
 				if (m_foodGrid[m_foodCoords[i].y][m_foodCoords[i].x] != 0)
 				{

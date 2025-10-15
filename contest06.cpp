@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <algorithm>
 
@@ -57,7 +58,7 @@ using namespace std;
 
 void myRandomize(const Settings & s)
 {
-	myrand(s.getSeed());
+	myrand((uint32)s.getSeed());
 	//srand(time(NULL));
 }
 
@@ -86,7 +87,7 @@ void printDisassembly(std::string fileToDisasm)
 	OrganismBinary *ob = c.getProgram();
 	if (ob == NULL)
 	{
-		printf("Error compiling player file:%\n program size exceeds NANORG memory size\n");
+		printf("Error compiling player file:\n program size exceeds NANORG memory size\n");
 		return;
 	}
 
@@ -204,7 +205,7 @@ bool runSingle(Settings &s)
 	OrganismBinary *playerOB = c.getProgram();
 	if (playerOB == NULL)
 	{
-		printf("Error compiling player file:%\n program size exceeds NANORG memory size\n");
+		printf("Error compiling player file:\n program size exceeds NANORG memory size\n");
 		return(false);
 	}
 
@@ -264,7 +265,7 @@ void runTrials
 	double finalScore = 0;
 	double totalScore = 0;
 
-	for (int i=0;i<seeds.size();i++)
+	for (size_t i=0;i<seeds.size();i++)
 	{
 		printf(" Evaluating %s: %d of %d\r",playerOB->getModuleName().c_str(),i+1,seeds.size());
 		s.setSeed(seeds[i]);

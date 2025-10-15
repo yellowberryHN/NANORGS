@@ -65,7 +65,7 @@ public:
 	}
 
 private:
-	std::string DisAsm::getRegString(int regNum);
+	std::string getRegString(int regNum);
 	std::string getOperandString(int instrLocation, int opNum, std::string &value, bool relative);
 	std::string getCurrentInstructionString(int location, bool appendValues);
 	

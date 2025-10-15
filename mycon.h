@@ -39,6 +39,7 @@
 #define _MYCON_H_
 
 #include <string>
+#include <cstring>
 #include <stdio.h>
 
 
@@ -120,7 +121,15 @@ public:
         std::string getString(void)
         {
                 char temp[256];
-                gets(temp);
+                fgets(temp, 256, stdin);
+
+                char* ptr = strchr(temp, '\n');
+                if (ptr)
+                    *ptr = 0;
+                ptr = strchr(temp, '\r');
+                if (ptr)
+                    *ptr = 0;
+                
                 return(temp);
         }
 
@@ -147,7 +156,9 @@ public:
                 m_noDisplay = noDisplay;
 
                 if (m_noDisplay == false)
-                        m_hConsole = GetStdHandle ( STD_OUTPUT_HANDLE );
+                    m_hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+                else
+                    m_hConsole = INVALID_HANDLE_VALUE;
         }
 
         ~CConsole()
