@@ -267,7 +267,7 @@ void runTrials
 
 	for (size_t i=0;i<seeds.size();i++)
 	{
-		printf(" Evaluating %s: %d of %d\r",playerOB->getModuleName().c_str(),i+1,seeds.size());
+		printf(" Evaluating %s: %lu of %lu\r",playerOB->getModuleName().c_str(),i+1,seeds.size());
 		s.setSeed(seeds[i]);
 
 		if (oneRound(s, playerOB, droneOB, &finalScore,NULL,NULL,NULL) == true)

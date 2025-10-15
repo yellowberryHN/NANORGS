@@ -1090,7 +1090,7 @@ void Organism::editData(const std::string &data)
 {
 	unsigned int off, val;
 
-	if (sscanf(data.c_str() + 1, "%d %d", &off, &val) && off < MAX_DNA)
+	if (sscanf(data.c_str() + 1, "%u %u", &off, &val) && off < MAX_DNA)
 		m_dna[(uint16)off] = (uint16)val;
 }
 
@@ -1098,7 +1098,7 @@ void Organism::editRegister(const std::string &data)
 {
 	unsigned int off, val;
 
-	if (sscanf(data.c_str() + 1, "%d %d", &off, &val) && off < MAX_REGS)
+	if (sscanf(data.c_str() + 1, "%u %u", &off, &val) && off < MAX_REGS)
 		m_regs[(uint16)off] = (uint16)val;
 }
 

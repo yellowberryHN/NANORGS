@@ -77,7 +77,7 @@ public:
 	std::string getModuleName(void)
 	{
 		size_t index = m_moduleInfo.find_first_of(" \t,");
-		if (index == -1)
+		if (index == std::string::npos)
 			return(m_moduleInfo);
 		return(m_moduleInfo.substr(0,index));
 	}
@@ -522,7 +522,7 @@ public:
 				{
 					// register: r##
 					unsigned int regNum;
-					if (!sscanf(m_token.c_str() + 1, "%d", &regNum) || regNum > MAX_USER_REGS)
+					if (!sscanf(m_token.c_str() + 1, "%u", &regNum) || regNum > MAX_USER_REGS)
 						return(false);
 					m_regNum = (uint16)regNum;
 					m_tokenType = TOKEN_REGISTER;
@@ -581,7 +581,7 @@ public:
 
 				unsigned int val;
 
-				if (!sscanf(m_token.c_str(), "%d", &val) || val > MAX_WORD_VALUE)
+				if (!sscanf(m_token.c_str(), "%u", &val) || val > MAX_WORD_VALUE)
 					return(false);
 
 				m_immed = (uint16)val;
